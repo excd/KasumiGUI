@@ -56,6 +56,7 @@
             panel1 = new Panel();
             splitContainer1 = new SplitContainer();
             tableLayoutPanel1 = new TableLayoutPanel();
+            restartButton = new Button();
             stopButton = new Button();
             startButton = new Button();
             logTextBox = new TextBox();
@@ -73,7 +74,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, toolsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(984, 24);
+            menuStrip1.Size = new Size(1109, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -154,7 +155,7 @@
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.Size = new Size(146, 22);
             exitToolStripMenuItem.Text = "E&xit";
-            exitToolStripMenuItem.Click += ExitMenuButton;
+            exitToolStripMenuItem.Click += ExitButton;
             // 
             // editToolStripMenuItem
             // 
@@ -282,7 +283,7 @@
             panel1.Location = new Point(0, 24);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(3);
-            panel1.Size = new Size(984, 337);
+            panel1.Size = new Size(1109, 337);
             panel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -300,7 +301,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(logTextBox);
-            splitContainer1.Size = new Size(978, 331);
+            splitContainer1.Size = new Size(1103, 331);
             splitContainer1.SplitterDistance = 148;
             splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
@@ -309,6 +310,7 @@
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(restartButton, 0, 2);
             tableLayoutPanel1.Controls.Add(stopButton, 0, 1);
             tableLayoutPanel1.Controls.Add(startButton, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -329,6 +331,18 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
             tableLayoutPanel1.Size = new Size(144, 327);
             tableLayoutPanel1.TabIndex = 0;
+            // 
+            // restartButton
+            // 
+            restartButton.Dock = DockStyle.Fill;
+            restartButton.Location = new Point(1, 55);
+            restartButton.Margin = new Padding(1);
+            restartButton.Name = "restartButton";
+            restartButton.Size = new Size(142, 25);
+            restartButton.TabIndex = 2;
+            restartButton.Text = "Restart";
+            restartButton.UseVisualStyleBackColor = true;
+            restartButton.Click += RestartButton;
             // 
             // stopButton
             // 
@@ -364,14 +378,14 @@
             logTextBox.Name = "logTextBox";
             logTextBox.ReadOnly = true;
             logTextBox.ScrollBars = ScrollBars.Both;
-            logTextBox.Size = new Size(823, 327);
+            logTextBox.Size = new Size(948, 327);
             logTextBox.TabIndex = 0;
             // 
             // Window
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(984, 361);
+            ClientSize = new Size(1109, 361);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -379,6 +393,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Kasumi";
             FormClosed += CloseWindow;
+            Shown += OpenWindow;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             panel1.ResumeLayout(false);
@@ -430,5 +445,6 @@
         private Button button2;
         private Button startButton;
         private Button stopButton;
+        private Button restartButton;
     }
 }

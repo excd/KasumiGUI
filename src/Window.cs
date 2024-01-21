@@ -4,29 +4,25 @@ namespace KasumiGUI {
             InitializeComponent();
         }
 
-        #region Window Methods
         /// <summary>
-        ///    Outputs a message to the log text box.
+        ///     Outputs a message to the log text box.
         /// </summary>
         /// <param name="message"></param>
         public void Out(string message) {
             logTextBox.AppendText(message + "\r\n");
         }
 
-        private void TerminateApplication() {
-            Program.DiscordClient?.Stop();
-            Application.Exit();
-            Environment.Exit(0);
-        }
-        #endregion Window Methods
-
         #region Event Handlers
-        private void CloseWindow(object sender, FormClosedEventArgs? e) {
-            TerminateApplication();
+        private void OpenWindow(object sender, EventArgs e) {
+            ActiveForm.ActiveControl = null;
         }
 
-        private void ExitMenuButton(object sender, EventArgs e) {
-            TerminateApplication();
+        private void CloseWindow(object sender, FormClosedEventArgs? e) {
+            Program.TerminateApplication();
+        }
+
+        private void ExitButton(object sender, EventArgs e) {
+            Program.TerminateApplication();
         }
 
         private void StartButton(object sender, EventArgs e) {
@@ -35,6 +31,10 @@ namespace KasumiGUI {
 
         private void StopButton(object sender, EventArgs e) {
             Program.DiscordClient?.Stop();
+        }
+
+        private void RestartButton(object sender, EventArgs e) {
+            Program.DiscordClient?.Restart();
         }
         #endregion Event Handlers
     }

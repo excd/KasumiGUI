@@ -24,19 +24,31 @@ namespace KasumiGUI.discord {
             commands.Log += logger.Log;
         }
 
-        public async Task Start() {
-            if (!string.IsNullOrEmpty(this.token)) {
-                await client.LoginAsync(TokenType.Bot, token);
-                await client.StartAsync();
-            }
-            else {
-                await logger.Log(new LogMessage(LogSeverity.Error, "Config", "Token is null! Check application config."));
+        public async void Start() {
+            if (client.ConnectionState == ConnectionState.Disconnected) {
+                if (!string.IsNullOrEmpty(this.token)) {
+                    await client.LoginAsync(TokenType.Bot, token);
+                    await client.StartAsync();
+                }
+                else {
+                    await logger.Log(new LogMessage(LogSeverity.Error, "Config", "Token is null! Check application config."));
+                }
             }
         }
 
-        public async Task Stop() {
-            await client.LogoutAsync();
-            await client.StopAsync();
+        public async void Stop() {
+            if (client.ConnectionState == ConnectionState.Connected) {
+                await client.LogoutAsync();
+                await client.StopAsync();
+            }
+        }
+
+        public async void Restart() {
+            if (client.ConnectionState == ConnectionState.Connected) {
+                Stop();
+                await Task.Delay(1000);
+                Start();
+            }
         }
     }
 }
