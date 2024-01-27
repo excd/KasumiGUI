@@ -1,37 +1,49 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using KasumiGUI.utility;
 using System.Configuration;
 
-namespace KasumiGUI.discord {
+namespace KasumiGUI.Discord {
     internal class DiscordClient {
         private readonly DiscordSocketClient client;
         private readonly CommandService commands;
-        private readonly Logger logger;
+        private readonly CommandHandler commandHandler;
         private readonly string? token;
 
-        public DiscordClient(ref Window window) {
-            this.client = new();
+        private readonly DiscordSocketConfig config = new() {
+            LogLevel = LogSeverity.Info,
+            MessageCacheSize = 1000,
+            AlwaysDownloadUsers = true,
+            GatewayIntents = GatewayIntents.Guilds | GatewayIntents.GuildMessages |
+                GatewayIntents.DirectMessages | GatewayIntents.MessageContent
+        };
+
+        public DiscordClient() {
+            this.client = new(config);
             this.commands = new();
-            this.logger = new(ref window);
-            this.token = ConfigurationManager.AppSettings["token"];
+            this.commandHandler = new(ref client, ref commands);
+            this.token = ConfigurationManager.AppSettings["Token"];
             Initialize();
         }
 
-        private void Initialize() {
-            client.Log += logger.Log;
-            commands.Log += logger.Log;
+        private async void Initialize() {
+            if (Program.Logger != null) {
+                client.Log += Program.Logger.LogAsync;
+                commands.Log += Program.Logger.LogAsync;
+            }
+            await commandHandler.InitializeAsync();
         }
 
         public async void Start() {
             if (client.ConnectionState == ConnectionState.Disconnected) {
-                if (!string.IsNullOrEmpty(this.token)) {
+                if (!string.IsNullOrEmpty(token)) {
                     await client.LoginAsync(TokenType.Bot, token);
                     await client.StartAsync();
                 }
                 else {
-                    await logger.Log(new LogMessage(LogSeverity.Error, "Config", "Token is null! Check application config."));
+                    if (Program.Logger != null)
+                        await Program.Logger.LogAsync(new LogMessage(LogSeverity.Error, "Config",
+                            "Token is null! Check application config."));
                 }
             }
         }
