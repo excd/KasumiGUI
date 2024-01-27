@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <ApplicationIcon>kasumi.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +16,10 @@
 
   <ItemGroup>
     <EditorConfigFiles Remove="D:\_repo\KasumiGUI\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="kasumi.ico" />
   </ItemGroup>
 
   <ItemGroup>
