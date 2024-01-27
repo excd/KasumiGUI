@@ -74,7 +74,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, toolsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1109, 24);
+            menuStrip1.Size = new Size(1083, 24);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -283,7 +283,7 @@
             panel1.Location = new Point(0, 24);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(3);
-            panel1.Size = new Size(1109, 337);
+            panel1.Size = new Size(1083, 453);
             panel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -301,7 +301,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(logTextBox);
-            splitContainer1.Size = new Size(1103, 331);
+            splitContainer1.Size = new Size(1077, 447);
             splitContainer1.SplitterDistance = 148;
             splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
@@ -317,28 +317,28 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 12;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.333332F));
-            tableLayoutPanel1.Size = new Size(144, 327);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.Size = new Size(144, 443);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // restartButton
             // 
             restartButton.Dock = DockStyle.Fill;
-            restartButton.Location = new Point(1, 55);
+            restartButton.Location = new Point(1, 57);
             restartButton.Margin = new Padding(1);
             restartButton.Name = "restartButton";
-            restartButton.Size = new Size(142, 25);
+            restartButton.Size = new Size(142, 26);
             restartButton.TabIndex = 2;
             restartButton.Text = "Restart";
             restartButton.UseVisualStyleBackColor = true;
@@ -347,10 +347,10 @@
             // stopButton
             // 
             stopButton.Dock = DockStyle.Fill;
-            stopButton.Location = new Point(1, 28);
+            stopButton.Location = new Point(1, 29);
             stopButton.Margin = new Padding(1);
             stopButton.Name = "stopButton";
-            stopButton.Size = new Size(142, 25);
+            stopButton.Size = new Size(142, 26);
             stopButton.TabIndex = 1;
             stopButton.Text = "Stop";
             stopButton.UseVisualStyleBackColor = true;
@@ -362,7 +362,7 @@
             startButton.Location = new Point(1, 1);
             startButton.Margin = new Padding(1);
             startButton.Name = "startButton";
-            startButton.Size = new Size(142, 25);
+            startButton.Size = new Size(142, 26);
             startButton.TabIndex = 0;
             startButton.Text = "Start";
             startButton.UseVisualStyleBackColor = true;
@@ -373,21 +373,23 @@
             logTextBox.BackColor = SystemColors.ControlLightLight;
             logTextBox.BorderStyle = BorderStyle.None;
             logTextBox.Dock = DockStyle.Fill;
+            logTextBox.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             logTextBox.Location = new Point(0, 0);
             logTextBox.Multiline = true;
             logTextBox.Name = "logTextBox";
             logTextBox.ReadOnly = true;
             logTextBox.ScrollBars = ScrollBars.Both;
-            logTextBox.Size = new Size(948, 327);
+            logTextBox.Size = new Size(922, 443);
             logTextBox.TabIndex = 0;
             // 
             // Window
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1109, 361);
+            ClientSize = new Size(1083, 477);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Window";
             StartPosition = FormStartPosition.CenterScreen;
