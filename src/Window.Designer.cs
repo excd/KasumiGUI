@@ -60,6 +60,8 @@
             stopButton = new Button();
             startButton = new Button();
             logTextBox = new TextBox();
+            statusStrip = new StatusStrip();
+            statusLabel = new ToolStripStatusLabel();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -67,6 +69,7 @@
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            statusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -283,7 +286,7 @@
             panel1.Location = new Point(0, 24);
             panel1.Name = "panel1";
             panel1.Padding = new Padding(3);
-            panel1.Size = new Size(1083, 453);
+            panel1.Size = new Size(1083, 431);
             panel1.TabIndex = 2;
             // 
             // splitContainer1
@@ -301,7 +304,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(logTextBox);
-            splitContainer1.Size = new Size(1077, 447);
+            splitContainer1.Size = new Size(1077, 425);
             splitContainer1.SplitterDistance = 148;
             splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
@@ -329,7 +332,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
             tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.Size = new Size(144, 443);
+            tableLayoutPanel1.Size = new Size(144, 421);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // restartButton
@@ -379,8 +382,22 @@
             logTextBox.Name = "logTextBox";
             logTextBox.ReadOnly = true;
             logTextBox.ScrollBars = ScrollBars.Both;
-            logTextBox.Size = new Size(922, 443);
+            logTextBox.Size = new Size(922, 421);
             logTextBox.TabIndex = 0;
+            // 
+            // statusStrip
+            // 
+            statusStrip.Items.AddRange(new ToolStripItem[] { statusLabel });
+            statusStrip.Location = new Point(0, 455);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(1083, 22);
+            statusStrip.TabIndex = 3;
+            // 
+            // statusLabel
+            // 
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(79, 17);
+            statusLabel.Text = "Disconnected";
             // 
             // Window
             // 
@@ -389,6 +406,7 @@
             ClientSize = new Size(1083, 477);
             Controls.Add(panel1);
             Controls.Add(menuStrip1);
+            Controls.Add(statusStrip);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Name = "Window";
@@ -405,6 +423,8 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -444,9 +464,10 @@
         private SplitContainer splitContainer1;
         private TextBox logTextBox;
         private TableLayoutPanel tableLayoutPanel1;
-        private Button button2;
         private Button startButton;
         private Button stopButton;
         private Button restartButton;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel statusLabel;
     }
 }
