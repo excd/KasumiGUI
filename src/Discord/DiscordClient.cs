@@ -35,6 +35,14 @@ namespace KasumiGUI.Discord {
             await commandHandler.InitializeAsync();
         }
 
+        private async Task Connected() {
+            await Task.Run(() => Window.ActiveForm?.Invoke(new Action(() => Window.UpdateStatus("Connected"))));
+        }
+
+        private async Task Disconnected(Exception? exception) {
+            await Task.Run(() => Window.ActiveForm?.Invoke(new Action(() => Window.UpdateStatus("Disconnected"))));
+        }
+
         public async void Start() {
             if (client.ConnectionState == ConnectionState.Disconnected) {
                 if (!string.IsNullOrEmpty(token)) {
