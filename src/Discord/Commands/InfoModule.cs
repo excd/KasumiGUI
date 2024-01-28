@@ -10,18 +10,5 @@ namespace KasumiGUI.Discord.Commands {
             await ReplyAsync(message);
         }
 
-        private async Task LogCommandAsync(string command) {
-            if (Program.Logger != null)
-                await Program.Logger.LogAsync(new LogMessage(LogSeverity.Info, "Command",
-                    $"User {Context.User.Username}#{Context.User.Discriminator} executed: {command}"));
-        }
-
-        private async Task ReplyAsync(string message) {
-            if (Program.Logger != null)
-                await Program.Logger.LogAsync(new LogMessage(LogSeverity.Info, "Response",
-                    $"Bot replied: {message}"));
-
-            await base.ReplyAsync(message);
-        }
     }
 }
