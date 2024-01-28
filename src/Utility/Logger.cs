@@ -2,25 +2,19 @@
 using System.Reflection;
 
 namespace KasumiGUI.Utility {
-    internal class Logger {
-        private readonly Window window;
-
-        public Logger(ref Window window) {
-            this.window = window;
-        }
-
-        public async Task LogAsync(LogMessage message) {
+    public static class Logger {
+        public static async Task LogAsync(LogMessage message) {
             await LogToFileAsync(message);
             await LogToWindowAsync(message);
         }
 
-        private async Task LogToWindowAsync(LogMessage message) {
-            await Task.Run(() => window.Invoke(new Action(() => {
-                if (window.IsHandleCreated) {
-                    window.Out(FormatMessage(message));
+        private static async Task LogToWindowAsync(LogMessage message) {
+            await Task.Run(() => Window.ActiveForm.Invoke(new Action(() => {
+                if (Window.ActiveForm.IsHandleCreated) {
+                    Window.Out(FormatMessage(message));
 
                     if (message.Exception != null)
-                        window.Out(message.Exception.ToString());
+                        Window.Out(message.Exception.ToString());
                 }
             })));
         }

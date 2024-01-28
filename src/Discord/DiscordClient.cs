@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using KasumiGUI.Utility;
 using System.Configuration;
 
 namespace KasumiGUI.Discord {
@@ -27,10 +28,10 @@ namespace KasumiGUI.Discord {
         }
 
         private async void Initialize() {
-            if (Program.Logger != null) {
-                client.Log += Program.Logger.LogAsync;
-                commands.Log += Program.Logger.LogAsync;
-            }
+            client.Log += Logger.LogAsync;
+            client.Connected += Connected;
+            client.Disconnected += Disconnected;
+            commands.Log += Logger.LogAsync;
             await commandHandler.InitializeAsync();
         }
 
@@ -41,9 +42,7 @@ namespace KasumiGUI.Discord {
                     await client.StartAsync();
                 }
                 else {
-                    if (Program.Logger != null)
-                        await Program.Logger.LogAsync(new LogMessage(LogSeverity.Error, "Config",
-                            "Token is null! Check application config."));
+                    await Logger.LogAsync(new LogMessage(LogSeverity.Error, "Config", "Token is null! Check application config."));
                 }
             }
         }

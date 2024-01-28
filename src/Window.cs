@@ -1,6 +1,9 @@
 namespace KasumiGUI {
     public partial class Window : Form {
+        private static Window? ThisWindow { get; set; }
+
         public Window() {
+            ThisWindow = this;
             InitializeComponent();
         }
 
@@ -8,8 +11,18 @@ namespace KasumiGUI {
         ///     Outputs a message to the log text box.
         /// </summary>
         /// <param name="message"></param>
-        public void Out(string message) {
-            logTextBox.AppendText(message + "\r\n");
+        public static void Out(string message) {
+            if (ThisWindow != null)
+                ThisWindow.logTextBox.AppendText(message + "\r\n");
+        }
+
+        /// <summary>
+        ///     Updates the status label.
+        /// </summary>
+        /// <param name="status"></param>
+        public static void UpdateStatus(string status) {
+            if (ThisWindow != null)
+                ThisWindow.statusLabel.Text = status;
         }
 
         #region Event Handlers

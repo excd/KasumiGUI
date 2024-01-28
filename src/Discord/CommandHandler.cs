@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using KasumiGUI.Utility;
 using System.Reflection;
 
 namespace KasumiGUI.Discord {
@@ -31,18 +32,15 @@ namespace KasumiGUI.Discord {
         }
 
         public static async Task ReplyAsync(SocketCommandContext context, string message) {
-            if (Program.Logger != null) {
-                await LogCommandAsync(context);
-                await Program.Logger.LogAsync(new LogMessage(LogSeverity.Info, "Response",
-                    $"Bot replied: {message}"));
-            }
+            await LogCommandAsync(context);
+            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Response",
+                $"Bot replied: {message}"));
             await context.Channel.SendMessageAsync(message);
         }
 
         private static async Task LogCommandAsync(SocketCommandContext context) {
-            if (Program.Logger != null)
-                await Program.Logger.LogAsync(new LogMessage(LogSeverity.Info, "Command",
-                    $"User {context.User.Username}#{context.User.Discriminator} executed: {context.Message}"));
+            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Command",
+                $"User {context.User.Username}#{context.User.Discriminator} executed: {context.Message}"));
         }
     }
 }
