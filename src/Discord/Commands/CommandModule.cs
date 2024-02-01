@@ -5,27 +5,21 @@ namespace KasumiGUI.Discord.Commands {
     public class CommandModule : ModuleBase<SocketCommandContext> {
         [Command("say")]
         [Summary("Echoes a message.")]
-        public async Task EchoAsync([Remainder][Summary("The text to echo.")] string message) {
+        public async Task EchoAsync([Remainder][Summary("The text to echo.")] string message) =>
             await CommandHandler.ReplyAsync(Context, message);
-        }
 
         [Command("ping")]
         [Summary("Pings the bot.")]
-        public async Task PingAsync() {
-            await CommandHandler.ReplyAsync(Context, "Pong!");
-        }
+        public async Task PingAsync() => await CommandHandler.ReplyAsync(Context, "Pong!");
 
         [Command("coin")]
         [Summary("Flips a coin.")]
-        public async Task CoinAsync() {
-            await CommandHandler.ReplyAsync(Context, new Random().Next(2) == 0 ? "Heads" : "Tails");
-        }
+        public async Task CoinAsync() => await CommandHandler.ReplyAsync(Context, new Random().Next(2) == 0 ? "Heads" : "Tails");
 
         [Command("roll")]
         [Summary("Rolls a dice.")]
-        public async Task RollAsync([Summary("The number of sides on the dice.")] int sides = 6) {
+        public async Task RollAsync([Summary("The number of sides on the dice.")] int sides = 6) =>
             await CommandHandler.ReplyAsync(Context, new Random().Next(1, sides + 1).ToString());
-        }
 
         [Command("choose")]
         [Summary("Chooses between a comma separated list of options.")]
@@ -33,6 +27,11 @@ namespace KasumiGUI.Discord.Commands {
             string[] options = message.Split(',');
             await CommandHandler.ReplyAsync(Context, options[new Random().Next(options.Length)]);
         }
+
+        [Command("rate")]
+        [Summary("Rates something out of 10.")]
+        public async Task RateAsync([Remainder][Summary("The thing to rate.")] string message) =>
+            await CommandHandler.ReplyAsync(Context, $"{message} is a {new Random().Next(11)}/10.");
 
         [Command("8ball")]
         [Summary("Ask the magic 8-ball a question.")]
@@ -64,15 +63,22 @@ namespace KasumiGUI.Discord.Commands {
 
         [Command("reverse")]
         [Summary("Reverses the text.")]
-        public async Task ReverseAsync([Remainder][Summary("The text to reverse.")] string text) {
+        public async Task ReverseAsync([Remainder][Summary("The text to reverse.")] string text) =>
             await CommandHandler.ReplyAsync(Context, new string(text.Reverse().ToArray()));
+
+        [Command("mock")]
+        [Summary("Mocks the text.")]
+        public async Task MockAsync([Remainder][Summary("The text to mock.")] string text) {
+            string mockedText = "";
+            for (int i = 0; i < text.Length; i++)
+                mockedText += i % 2 == 0 ? char.ToUpper(text[i]) : char.ToLower(text[i]);
+            await CommandHandler.ReplyAsync(Context, mockedText);
         }
 
         [Command("owo")]
         [Summary("OwOifies the text.")]
-        public async Task OwoAsync([Remainder][Summary("The text to OwOify.")] string text) {
+        public async Task OwoAsync([Remainder][Summary("The text to OwOify.")] string text) =>
             await CommandHandler.ReplyAsync(Context, text.Replace("r", "w").Replace("l", "w").Replace("R", "W").Replace("L", "W"));
-        }
 
         [Command("bully")]
         [Summary("Bullies a user.")]
