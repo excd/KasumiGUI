@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     <appSettings>
-        <add key="token" value="" />
+        <add key="Token" value="" />
+		<add key="PrefixChar" value="!" />
+        <add key="LogLevel" value="Info" />
     </appSettings>
 </configuration>

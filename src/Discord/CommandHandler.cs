@@ -2,16 +2,19 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using KasumiGUI.Utility;
+using System.Configuration;
 using System.Reflection;
 
 namespace KasumiGUI.Discord {
     internal class CommandHandler {
         private readonly DiscordSocketClient client;
         private readonly CommandService commands;
+        private readonly string? prefixChar;
 
         public CommandHandler(ref DiscordSocketClient client, ref CommandService commands) {
             this.client = client;
             this.commands = commands;
+            this.prefixChar = ConfigurationManager.AppSettings["PrefixChar"];
         }
 
         public async Task InitializeAsync() {
@@ -24,7 +27,7 @@ namespace KasumiGUI.Discord {
                 return;
 
             int argPos = 0;
-            if (!message.HasCharPrefix('!', ref argPos))
+            if (!string.IsNullOrEmpty(prefixChar) && !message.HasCharPrefix(prefixChar[0], ref argPos))
                 return;
 
             SocketCommandContext context = new(client, message);
@@ -33,14 +36,13 @@ namespace KasumiGUI.Discord {
 
         public static async Task ReplyAsync(SocketCommandContext context, string message) {
             await LogCommandAsync(context);
-            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Response",
-                $"Bot replied: {message}"));
+            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Bot", $"Reply: {message}"));
             await context.Channel.SendMessageAsync(message);
         }
 
         private static async Task LogCommandAsync(SocketCommandContext context) {
-            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Command",
-                $"User {context.User.Username}#{context.User.Discriminator} executed: {context.Message}"));
+            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "User",
+                $"{context.User.Username}#{context.User.Discriminator}({context.User.Id}): {context.Message}"));
         }
     }
 }

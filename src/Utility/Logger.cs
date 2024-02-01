@@ -1,4 +1,5 @@
 ﻿using Discord;
+using System.Configuration;
 using System.Reflection;
 
 namespace KasumiGUI.Utility {
@@ -8,9 +9,20 @@ namespace KasumiGUI.Utility {
             await LogToWindowAsync(message);
         }
 
+        public static LogSeverity GetLogLevel() =>
+            ConfigurationManager.AppSettings["LogLevel"]?.ToUpper() switch {
+                "CRITICAL" => LogSeverity.Critical,
+                "ERROR" => LogSeverity.Error,
+                "WARNING" => LogSeverity.Warning,
+                "INFO" => LogSeverity.Info,
+                "VERBOSE" => LogSeverity.Verbose,
+                "DEBUG" => LogSeverity.Debug,
+                _ => LogSeverity.Info
+            };
+
         private static async Task LogToWindowAsync(LogMessage message) {
-            await Task.Run(() => Window.ActiveForm.Invoke(new Action(() => {
-                if (Window.ActiveForm.IsHandleCreated) {
+            await Task.Run(() => Window.ActiveWindow?.Invoke(new Action(() => {
+                if (Window.ActiveWindow.IsHandleCreated) {
                     Window.Out(FormatMessage(message));
 
                     if (message.Exception != null)
@@ -31,7 +43,7 @@ namespace KasumiGUI.Utility {
         }
 
         private static string FormatMessage(LogMessage message) {
-            return string.Format("[{0}][{1,8}][{2,7}] {3}", DateTime.Now, message.Source, message.Severity, message.Message);
+            return string.Format("[{0}][{1,8}][{2,8}] {3}", DateTime.Now, message.Source, message.Severity, message.Message);
         }
     }
 }
