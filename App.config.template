@@ -2,6 +2,7 @@
 <configuration>
     <appSettings>
         <add key="Token" value="" />
+        <add key="SQLiteDBFile" value="Kasumi.db" />
 		<add key="PrefixChar" value="!" />
         <add key="LogLevel" value="Info" />
     </appSettings>

@@ -1,8 +1,11 @@
-namespace KasumiGUI {
-    public partial class Window : Form {
+namespace KasumiGUI
+{
+    internal partial class Window : Form
+    {
         public static Window? ActiveWindow { get; set; }
 
-        public Window() {
+        public Window()
+        {
             ActiveWindow = this;
             InitializeComponent();
         }
@@ -17,23 +20,40 @@ namespace KasumiGUI {
         ///     Updates the status label.
         /// </summary>
         /// <param name="status"></param>
-        public static void UpdateStatus(string status) {
+        public static void UpdateStatus(string status)
+        {
             if (ActiveWindow != null)
                 ActiveWindow.statusLabel.Text = status;
         }
 
         #region Event Handlers
-        private void OpenWindow(object sender, EventArgs e) => ActiveForm.ActiveControl = null;
+        private void OpenWindow(object sender, EventArgs e)
+        {
+            if (ActiveForm != null)
+                ActiveForm.ActiveControl = null;
+        }
 
-        private void CloseWindow(object sender, FormClosedEventArgs? e) => Program.TerminateApplication();
+        private async void CloseWindow(object sender, FormClosedEventArgs? e) => await Program.TerminateApplication();
 
-        private void ExitButton(object sender, EventArgs e) => Program.TerminateApplication();
+        private async void ExitButton(object sender, EventArgs e) => await Program.TerminateApplication();
 
-        private void StartButton(object sender, EventArgs e) => Program.DiscordClient?.Start();
+        private async void StartButton(object sender, EventArgs e)
+        {
+            if (Program.DiscordClient != null)
+                await Program.DiscordClient.Start();
+        }
 
-        private void StopButton(object sender, EventArgs e) => Program.DiscordClient?.Stop();
+        private async void StopButton(object sender, EventArgs e)
+        {
+            if (Program.DiscordClient != null)
+                await Program.DiscordClient.Stop();
+        }
 
-        private void RestartButton(object sender, EventArgs e) => Program.DiscordClient?.Restart();
+        private async void RestartButton(object sender, EventArgs e)
+        {
+            if (Program.DiscordClient != null)
+                await Program.DiscordClient.Restart();
+        }
 
         private void ClearButton(object sender, EventArgs e) => Invoke(new Action(() => logTextBox.Clear()));
         #endregion Event Handlers

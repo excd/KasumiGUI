@@ -1,0 +1,7 @@
+﻿Too dumb to make your own decisions? Okay, I pick {{CHOICE}}.
+I choose {{CHOICE}}, not that I really care what you do.
+I pick {{CHOICE}}, but I'm not sure why you even asked me.
+{{CHOICE}}.
+{{CHOICE}} it is. Happy now?
+Make your own decisions and leave me alone!\nWhatever, I pick {{CHOICE}}.
+You're too stupid to make your own choices?\nFine, I choose {{CHOICE}}.

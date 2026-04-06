@@ -2,47 +2,40 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using KasumiGUI.Utility;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Reflection;
 
-namespace KasumiGUI.Discord {
-    internal class CommandHandler {
-        private readonly DiscordSocketClient client;
-        private readonly CommandService commands;
-        private readonly string? prefixChar;
+namespace KasumiGUI.Discord
+{
+    public class CommandHandler(DiscordSocketClient client, CommandService commands, IServiceProvider services)
+    {
+        private readonly string? prefixChar = ConfigurationManager.AppSettings["PrefixChar"];
 
-        public CommandHandler(ref DiscordSocketClient client, ref CommandService commands) {
-            this.client = client;
-            this.commands = commands;
-            this.prefixChar = ConfigurationManager.AppSettings["PrefixChar"];
-        }
-
-        public async Task InitializeAsync() {
+        public async Task InitializeAsync()
+        {
+            _ = await commands.AddModulesAsync(assembly: Assembly.GetExecutingAssembly(), services: services);
             client.MessageReceived += HandleCommandAsync;
-            await commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: null);
         }
 
-        private async Task HandleCommandAsync(SocketMessage messageParam) {
-            if (messageParam is not SocketUserMessage message || message.Author.IsBot)
-                return;
-
+        private async Task HandleCommandAsync(SocketMessage messageParam)
+        {
             int argPos = 0;
-            if (!string.IsNullOrEmpty(prefixChar) && !message.HasCharPrefix(prefixChar[0], ref argPos))
+            if (messageParam is not SocketUserMessage message || message.Author.IsBot || (!string.IsNullOrEmpty(prefixChar) && !message.HasCharPrefix(prefixChar[0], ref argPos)))
                 return;
-
-            SocketCommandContext context = new(client, message);
-            await commands.ExecuteAsync(context: context, argPos: argPos, services: null);
+            using IServiceScope scope = services.CreateScope();
+            IResult result = await commands.ExecuteAsync(context: new SocketCommandContext(client, message), argPos: argPos, services: scope.ServiceProvider);
+            if (!result.IsSuccess)
+                await Logger.LogAsync(new LogMessage(LogSeverity.Warning, "Commands", $"Command failed: {result.ErrorReason}"));
         }
 
-        public static async Task ReplyAsync(SocketCommandContext context, string message) {
+        public static async Task ReplyAsync(SocketCommandContext context, string message)
+        {
             await LogCommandAsync(context);
             await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Bot", $"Reply: {message}"));
-            await context.Channel.SendMessageAsync(message);
+            _ = await context.Channel.SendMessageAsync(message);
         }
 
-        private static async Task LogCommandAsync(SocketCommandContext context) {
-            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "User",
-                $"{context.User.Username}#{context.User.Discriminator}({context.User.Id}): {context.Message}"));
-        }
+        private static async Task LogCommandAsync(SocketCommandContext context) => await Logger.LogAsync(new LogMessage(LogSeverity.Info, "User", $"{context.User.Username}#{context.User.Discriminator}({context.User.Id}): {context.Message}"));
     }
 }
