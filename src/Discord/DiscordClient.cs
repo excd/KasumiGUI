@@ -11,6 +11,8 @@ namespace KasumiGUI.Discord
 {
     internal class DiscordClient
     {
+        private const string LoggerSrc = "Client";
+
         private readonly DiscordSocketClient client;
         private readonly CommandService commands;
         private readonly IServiceProvider services;
@@ -73,7 +75,7 @@ namespace KasumiGUI.Discord
                 }
                 else
                 {
-                    await Logger.LogAsync(new LogMessage(LogSeverity.Error, "Config", "Token is null! Check application config."));
+                    await Logger.LogAsync(new LogMessage(LogSeverity.Error, LoggerSrc, "Token is null! Check application config."));
                 }
             }
         }

@@ -10,6 +10,8 @@ namespace KasumiGUI.Discord
 {
     public class CommandHandler(DiscordSocketClient client, CommandService commands, IServiceProvider services)
     {
+        private const string LoggerSrc = "Commands";
+
         private readonly string? prefixChar = ConfigurationManager.AppSettings["PrefixChar"];
 
         public async Task InitializeAsync()
@@ -26,13 +28,13 @@ namespace KasumiGUI.Discord
             using IServiceScope scope = services.CreateScope();
             IResult result = await commands.ExecuteAsync(context: new SocketCommandContext(client, message), argPos: argPos, services: scope.ServiceProvider);
             if (!result.IsSuccess)
-                await Logger.LogAsync(new LogMessage(LogSeverity.Warning, "Commands", $"Command failed: {result.ErrorReason}"));
+                await Logger.LogAsync(new LogMessage(LogSeverity.Warning, LoggerSrc, $"Command failed: {result.ErrorReason}"));
         }
 
         public static async Task ReplyAsync(SocketCommandContext context, string message)
         {
             await LogCommandAsync(context);
-            await Logger.LogAsync(new LogMessage(LogSeverity.Info, "Bot", $"Reply: {message}"));
+            await Logger.LogAsync(new LogMessage(LogSeverity.Info, LoggerSrc, $"Reply: {message}"));
             _ = await context.Channel.SendMessageAsync(message);
         }
 

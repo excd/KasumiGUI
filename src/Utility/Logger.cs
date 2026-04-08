@@ -41,13 +41,10 @@ namespace KasumiGUI.Utility
         {
             await Task.Run(() =>
             {
-                using (StreamWriter writer = new($"{Assembly.GetEntryAssembly()?.GetName().Name}.log", true))
-                {
-                    writer.WriteLine(FormatMessage(message));
-                    if (message.Exception != null)
-                        writer.WriteLine(message.Exception.ToString());
-                }
-                ;
+                using StreamWriter writer = new($"{Assembly.GetEntryAssembly()?.GetName().Name}.log", true);
+                writer.WriteLine(FormatMessage(message));
+                if (message.Exception != null)
+                    writer.WriteLine(message.Exception.ToString());
             });
         }
 
